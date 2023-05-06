@@ -5,6 +5,7 @@ import { PostService } from '../post.service';
 import { Post } from '../post';
 import { MatDialog } from '@angular/material';
 import { CreateComponent } from '../create/create.component';
+import { ViewComponent } from '../view/view.component';
 
 @Component({
   selector: 'app-index',
@@ -19,7 +20,7 @@ export class IndexComponent implements OnInit {
     body: [{nestedFieldControl:'this is first post'}],
     reply:['this is first replay']
   }];
-
+  searchData = '';
   constructor(private dialog : MatDialog) { }
 
   ngOnInit(): void {
@@ -29,7 +30,7 @@ export class IndexComponent implements OnInit {
     // })  
   }
   openCreatePost(data : any, index : any){
-     if(index){
+     if(index || index == 0){
        data.index = index;
      }
      const dailogRef  = this.dialog.open(CreateComponent,{
@@ -41,11 +42,10 @@ export class IndexComponent implements OnInit {
     
     dailogRef.afterClosed().subscribe((data:any)=>{
       if(data){
-        data.body = data.body
-        if(data?.index){
+        if(data?.index || data?.index==0){
           this.posts[data?.index] = data;
         }
-        if(!data?.index){
+        else{
           this.posts.push(data);
         }
         console.log(data,'............')
@@ -57,7 +57,14 @@ export class IndexComponent implements OnInit {
   deletePost(id){
     this.posts.splice(id, 1);
   }
-
+  viewPost(post) {
+    const dailogRef  = this.dialog.open(ViewComponent,{
+      hasBackdrop: false,
+      "width":'500px',
+      "height":'500px',
+      data: post,
+    })
+  }
   
 
 }

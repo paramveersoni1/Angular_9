@@ -1,6 +1,9 @@
 <div class="container">
-  
+  <div class="d-flex justify-content-between align-content-center align-items-center">
     <a (click)="openCreatePost('', null)" class="btn btn-success my-4">Create New Post</a>
+     <input placeholder="search" class="form-control w-50" [(ngModel)]="searchData"  />
+  </div>
+   
 
     <table class="table table-bordered">
 
@@ -16,7 +19,7 @@
 
       </tr>
 
-      <tr *ngFor="let post of posts; let i = index">
+      <tr class="py-2" *ngFor="let post of posts | searchFilter:'title':searchData; let i = index">
 
         <td>{{ i+1 }}</td>
 
@@ -24,9 +27,9 @@
 
         <td><div *ngFor="let data of post?.body">{{data?.nestedFieldControl}}</div></td>
 
-        <td>
+        <td class="m-2">
 
-          <a  [routerLink]="['/post/', post.id, 'view']" class="btn btn-info bg-info p-2">View</a>
+          <a  (click)="viewPost(post)" class="btn btn-info bg-info p-2">View</a>
 
           <a  (click)="openCreatePost(post , i)" class="btn btn-primary bg-primary p-2 mx-2">Edit</a>
 

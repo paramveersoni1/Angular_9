@@ -1,10 +1,10 @@
 <div class="container">
 
-    <h1>{{data?"Edit":"Create New"}} Post</h1>
+     <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 style="font-size: 24px;"> {{data?"Edit":"Create New"}} Post</h1>
+        <a (click)="dialogRef.close();" class="btn btn-outline-primary">Close</a>
+     </div>
 
-  
-
-    <a href="#" routerLink="/post/index" class="btn btn-primary">Back</a>
 
         
 
@@ -17,66 +17,32 @@
             <label for="title">Title:</label>
 
             <input 
-
                 formControlName="title"
-
                 id="title" 
-
                 type="text" 
-
-                class="form-control">
-
-            <div *ngIf="f.title.touched && f.title.invalid" class="alert alert-danger">
-
-                <div *ngIf="f.title.errors.required">Title is required.</div>
-
-            </div>
-
+                class="form-control mt-2">
         </div>
 
   
 
-        <div class="form-group">
+        <div class="form-group mb-3">
             
 
-            <label for="body">Body</label>
+            <label class="mt-2" for="body">Body</label>
 
-            <div formArrayName="body">
-                <div *ngFor="let field of nestedFields.controls; let i=index">
-                  <div [formGroupName]="i">
+            <div formArrayName="body" class="mt-2">
+                <div *ngFor="let field of nestedFields['controls']; let i=index">
+                  <div class="d-flex " [formGroupName]="i">
                     <!-- Add your nested field controls here -->
-                    <input formControlName="nestedFieldControl" type="text">
-                    <div *ngIf="nestedFields.controls[i].get('nestedFieldControl').invalid && nestedFields.controls[i].get('nestedFieldControl').touched">
-                      <div *ngIf="nestedFields.controls[i].get('nestedFieldControl').errors.required">Field is required.</div>
-                      <div *ngIf="nestedFields.controls[i].get('nestedFieldControl').errors.pattern">Invalid pattern.</div>
+                    <input  class="form-control mb-3 mr-3 align-items-center"  formControlName="nestedFieldControl" type="text">
+
+                    <a *ngIf="i > 0" style="height: 40px;"  (click)="RemoveData(i)" class="btn btn-primary bg-primary p-2 mx-2">Remove</a>
+
                     </div>
                   </div>
                 </div>
               </div>
-              <button (click)="addNestedField()">Add Field</button>
-
-            <!-- <textarea 
-
-                formControlName="body"
-
-                id="body" 
-
-                type="text" 
-
-                class="form-control">
-
-            </textarea>
-
-            <div *ngIf="f.body.touched && f.body.invalid" class="alert alert-danger">
-
-                <div *ngIf="f.body.errors.required">Body is required.</div>
-
-            </div> -->
-
-        </div>
-
-  
-
+              <button class="btn btn-outline-success mr-3" (click)="addNestedField()">Add Field</button>
         <button class="btn btn-primary" (click)="submit()" type="submit" [disabled]="!myForm.valid">Submit</button>
 
     </form>

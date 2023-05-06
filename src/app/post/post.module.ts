@@ -5,12 +5,12 @@ import { PostRoutingModule } from './post-routing.module';
 import { IndexComponent } from './index/index.component';
 import { ViewComponent } from './view/view.component';
 import { CreateComponent } from './create/create.component';
-import { EditComponent } from './edit/edit.component';
 import {MatDialogModule} from '@angular/material/dialog'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SearchFilterPipe } from './pipes/search-filter.pipe';
   
 @NgModule({
-  declarations: [IndexComponent, ViewComponent, CreateComponent, EditComponent],
+  declarations: [IndexComponent,SearchFilterPipe, ViewComponent, CreateComponent],
   imports: [
     CommonModule,
     PostRoutingModule,

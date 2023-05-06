@@ -21,30 +21,31 @@ export class CreateComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data:any
   ) { }
   ngOnInit(): void {
-  if(data?.body){
-    this.setFormValue(data);
-  }
-     this.myForm = this.formBuilder.group({
+    this.myForm = this.formBuilder.group({
       body: this.formBuilder.array([]),
-      title : [this.data?.title?this.data?.title:'', [Validators.required]]
+      title: [this.data?.title ? this.data?.title : '', [Validators.required]],
+      index:[ this.data?.index]
     });
     
-
+    if(this.data?.body){
+      this.setFormValue(this.data);
+    } else { 
+      this.addNestedField();
+    }
 
   }
-  setFormValue(data){
-    this.nestedFields = [];
-    this.data?.body.forEach(e => {
+  setFormValue(data: any) {
+    data?.body.forEach(e => {
       this.nestedFields.push(
         this.formBuilder.group({
           nestedFieldControl: [e.nestedFieldControl, [Validators.required]]
-        });
+        })
       )
     })
     }
 
   get nestedFields() {
-    return this.myForm.get('body') as FormArray;
+    return this.myForm?.get('body') as FormArray;
   }
 
   addNestedField() {
@@ -57,12 +58,12 @@ export class CreateComponent implements OnInit {
    
 
   get f(){
-
-    return this.myForm.controls;
-
+    return this.myForm?.controls;
   }
 
-    
+  RemoveData(i) {
+    this.nestedFields.removeAt(i);
+  }
 
   submit(){
 

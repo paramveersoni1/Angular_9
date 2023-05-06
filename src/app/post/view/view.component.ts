@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { PostService } from '../post.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from '../post';
+import { FormBuilder } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { CreateComponent } from '../create/create.component';
   
 @Component({
   selector: 'app-view',
@@ -14,17 +17,14 @@ export class ViewComponent implements OnInit {
   post: Post;
    
   constructor(
-    public postService: PostService,
-    private route: ActivatedRoute,
-    private router: Router
+    private formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<ViewComponent>,
+    @Inject(MAT_DIALOG_DATA) public data:any
    ) { }
   
   ngOnInit(): void {
-    this.id = this.route.snapshot.params['postId'];
-      
-    this.postService.find(this.id).subscribe((data: Post)=>{
-      this.post = data;
-    });
+
+
   }
   
 }
