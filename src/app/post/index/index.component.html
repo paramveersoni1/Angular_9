@@ -1,0 +1,42 @@
+<div class="container">
+  
+    <a (click)="openCreatePost('', null)" class="btn btn-success my-4">Create New Post</a>
+
+    <table class="table table-bordered">
+
+      <tr>
+
+        <th>ID</th>
+
+        <th>Title</th>
+
+        <th>Body</th>
+
+        <th width="220px">Action</th>
+
+      </tr>
+
+      <tr *ngFor="let post of posts; let i = index">
+
+        <td>{{ i+1 }}</td>
+
+        <td>{{ post.title }}</td>
+
+        <td><div *ngFor="let data of post?.body">{{data?.nestedFieldControl}}</div></td>
+
+        <td>
+
+          <a  [routerLink]="['/post/', post.id, 'view']" class="btn btn-info bg-info p-2">View</a>
+
+          <a  (click)="openCreatePost(post , i)" class="btn btn-primary bg-primary p-2 mx-2">Edit</a>
+
+          <button type="button" (click)="deletePost(i)" class="btn btn-danger bg-danger p-2">Delete</button>
+
+        </td>
+
+      </tr>
+      <div *ngIf="posts.length == 0"> No Data Found</div>
+
+    </table>
+
+ </div>
